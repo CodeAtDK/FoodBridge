@@ -159,7 +159,7 @@ fun SignUpScreen(navController: NavController){
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
                                 Toast.makeText(context, "Sign-up successful!", Toast.LENGTH_SHORT).show()
-                                navController.navigate(Screen.ScreenLoginRoute.route)
+                                navController.navigate(Screen.ScreenHomeRoute.route)
                             } else {
                                 Toast.makeText(context, "Error: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                                 Log.e(TAG, "Sign-up failed", task.exception)

@@ -73,6 +73,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.android.gms:play-services-auth:21.4.0")
 
+    // Material 3 theme importing
     implementation("androidx.compose.material3:material3:1.2.1") // Or the latest version
 
     //Coil for image displaying
