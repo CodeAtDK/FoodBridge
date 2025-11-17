@@ -51,6 +51,7 @@ import com.example.foodwastemangmentapplication1.ui.theme.FoodWasteMangmentAppli
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.firestore
 
 //import androidx.compose.material.icons.Icons
 //import androidx.compose.material.icons.filled.Visibility
@@ -72,6 +73,7 @@ class MainActivity : ComponentActivity() {
             FoodWasteMangmentApplication1Theme {
               //  auth = Firebase.auth
                 firebaseAuth = Firebase.auth
+                addSampleProducts()
 //                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
 //                    Greeting(
 //                        name = "Android",
@@ -85,6 +87,46 @@ class MainActivity : ComponentActivity() {
     }
     fun showToastMessage() {
         Toast.makeText(this, "Button clicked!", Toast.LENGTH_SHORT).show()
+    }
+
+    val db = Firebase.firestore
+
+    val sampleProducts = listOf(
+        hashMapOf(
+            "id" to "1",
+            "name" to "Vintage Leather Backpack",
+            "price" to 79.99,
+            "imageUrl" to "https://images.unsplash.com/photo-1553062407-98eeb68c6a62?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=60",
+            "description" to "A stylish and durable vintage leather backpack."
+        ),
+        hashMapOf(
+            "id" to "2",
+            "name" to "Wireless Bluetooth Headphones",
+            "price" to 129.50,
+            "imageUrl" to "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=60",
+            "description" to "High-fidelity wireless Bluetooth headphones."
+        ),
+        hashMapOf(
+            "id" to "3",
+            "name" to "Organic Green Tea",
+            "price" to 12.00,
+            "imageUrl" to "https://images.unsplash.com/photo-1576092762791-d240316e6153?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=60",
+            "description" to "A refreshing and healthy pack of organic green tea leaves."
+        )
+    )
+
+    fun addSampleProducts() {
+        sampleProducts.forEach { product ->
+            db.collection("products")
+                .document(product["id"] as String)
+                .set(product)
+                .addOnSuccessListener {
+                    Log.d("Firestore", "Product added: ${product["name"]}")
+                }
+                .addOnFailureListener { e ->
+                    Log.w("Firestore", "Error adding product", e)
+                }
+        }
     }
 
 

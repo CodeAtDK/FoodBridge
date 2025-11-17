@@ -117,6 +117,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -124,6 +127,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage // Modern Coil Composable
@@ -139,39 +143,40 @@ import coil.compose.AsyncImage // Modern Coil Composable
 // )
 
 // Sample products with valid placeholder image URLs (replace with your actual image URLs)
-val sampleProductsList = listOf(
-    Product(
-        id = "1",
-        name = "Vintage Leather Backpack",
-        price = 79.99,
-        imageUrl = "https://images.unsplash.com/photo-1553062407-98eeb68c6a62?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YmFja3BhY2t8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=400&q=60",
-        description = "A stylish and durable vintage leather backpack, perfect for everyday use or travel."
-    ),
-    Product(
-        id = "2",
-        name = "Wireless Bluetooth Headphones",
-        price = 129.50,
-        imageUrl = "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aGVhZHBob25lc3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=400&q=60",
-        description = "High-fidelity wireless Bluetooth headphones with noise-cancellation and long battery life."
-    ),
-    Product(
-        id = "3",
-        name = "Organic Green Tea",
-        price = 12.00,
-        imageUrl = "https://images.unsplash.com/photo-1576092762791-d240316e6153?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Z3JlZW4lMjB0ZWF8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=400&q=60",
-        description = "A refreshing and healthy pack of organic green tea leaves, sourced sustainably."
-    )
-)
+//val sampleProductsList = listOf(
+//    Product(
+//        id = "1",
+//        name = "Vintage Leather Backpack",
+//        price = 79.99,
+//        imageUrl = "https://images.unsplash.com/photo-1553062407-98eeb68c6a62?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YmFja3BhY2t8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=400&q=60",
+//        description = "A stylish and durable vintage leather backpack, perfect for everyday use or travel."
+//    ),
+//    Product(
+//        id = "2",
+//        name = "Wireless Bluetooth Headphones",
+//        price = 129.50,
+//        imageUrl = "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aGVhZHBob25lc3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=400&q=60",
+//        description = "High-fidelity wireless Bluetooth headphones with noise-cancellation and long battery life."
+//    ),
+//    Product(
+//        id = "3",
+//        name = "Organic Green Tea",
+//        price = 12.00,
+//        imageUrl = "https://images.unsplash.com/photo-1576092762791-d240316e6153?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Z3JlZW4lMjB0ZWF8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=400&q=60",
+//        description = "A refreshing and healthy pack of organic green tea leaves, sourced sustainably."
+//    )
+//)
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductListScreen(
     navController: NavController,
-    products: List<Product>, // Pass the list of products
+    viewModel: ProductViewModel = viewModel(), // Pass the list of products
     onProductClick: (Product) -> Unit,
     onSearchClick: () -> Unit // Callback for search action
 ) {
+    val products by remember { mutableStateOf(viewModel.products) }
     Scaffold(
         topBar = {
             TopAppBar(
@@ -291,7 +296,7 @@ fun ProductListScreenPreview() {
     MaterialTheme {
         ProductListScreen(
             navController = rememberNavController(),
-            products = sampleProductsList, // Use the updated sample list
+            //products = sampleProductsList, // Use the updated sample list
             onProductClick = { product -> println("Clicked on ${product.name}") },
             onSearchClick = { println("Search clicked") }
         )
@@ -305,7 +310,7 @@ fun ProductListScreenEmptyPreview() {
         ProductListScreen(
 
             navController = rememberNavController(),
-            products = emptyList(), // Test empty state
+          //  products = emptyList(), // Test empty state
             onProductClick = { product -> println("Clicked on ${product.name}") },
             onSearchClick = { println("Search clicked") }
         )

@@ -65,14 +65,10 @@ package com.example.foodwastemangmentapplication1.Market_Place
 import androidx.compose.foundation.layout.Arrangement // For Column spacing
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues // For LazyColumn contentPadding
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize // For Column in Scaffold
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.rememberScrollState // If using Column with scroll
-import androidx.compose.foundation.verticalScroll // If using Column with scroll
 import androidx.compose.material.icons.Icons // For TopAppBar
 import androidx.compose.material.icons.filled.ArrowBack // For TopAppBar
 import androidx.compose.material3.Button
@@ -87,6 +83,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar // For TopAppBar
 import androidx.compose.material3.TopAppBarDefaults // For TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
@@ -97,22 +96,7 @@ import androidx.navigation.compose.rememberNavController // For preview
 import com.example.foodwastemangmentapplication1.NavigationController.Screen
 
 // Assume Product data class is defined like this:
-data class Product(
-    val id: String,
-    val name: String,
-    val description: String,
-    val price: Double,
-    val imageUrl: String,
-    val category: String = "Unknown" // Example additional field
-)
 
-val sampleProduct = Product(
-    id = "123",
-    name = "Organic Apples",
-    description = "Freshly picked, juicy organic apples. Perfect for snacking or baking. Rich in vitamins and fiber. Sold per pound.",
-    price = 2.99,
-    imageUrl = "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXBwbGV8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60" // Replace with a valid image URL
-)
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -122,10 +106,11 @@ fun ProductDetailScreen(
     product: Product,
     onAddToCart: (Product) -> Unit
 ) {
+    //val product by remember { mutableStateOf(viewModel.products) }
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(product.name) },
+                title = { Text(product.id) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
@@ -219,11 +204,11 @@ fun ProductInfoSection(product: Product) {
             style = MaterialTheme.typography.titleLarge, // M3 Typography
             color = MaterialTheme.colorScheme.primary // Use primary color for price
         )
-        Text(
-            text = "Category: ${product.category}",
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
+//        Text(
+//            text = "Category: ${product.category}",
+//            style = MaterialTheme.typography.labelMedium,
+//            color = MaterialTheme.colorScheme.onSurfaceVariant
+//        )
         Divider(
             modifier = Modifier.padding(vertical = 12.dp),
             thickness = 1.dp,
@@ -246,10 +231,10 @@ fun ProductInfoSection(product: Product) {
 @Composable
 fun ProductDetailScreenPreview() {
     MaterialTheme {
-        ProductDetailScreen(
-            navController = rememberNavController(),
-            product = sampleProduct,
-            onAddToCart = { println("Add to cart: ${it.name}") }
-        )
+//        ProductDetailScreen(
+//            navController = rememberNavController(),
+//            product = sampleProduct,
+//            onAddToCart = { println("Add to cart: ${it.name}") }
+//        )
     }
 }

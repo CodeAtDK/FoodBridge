@@ -64,7 +64,7 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.7.3")
 
     // Firebase
-    implementation(platform("com.google.firebase:firebase-bom:34.2.0"))
+    implementation(platform("com.google.firebase:firebase-bom:34.5.0"))
 
     // Firebase analytics
     implementation("com.google.firebase:firebase-analytics")
@@ -78,4 +78,11 @@ dependencies {
 
     //Coil for image displaying
     implementation("io.coil-kt:coil-compose:2.4.0") // Use the latest version
+
+    // Declare the dependency for the Cloud Firestore library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-firestore")
+
+    // locations
+    implementation("com.google.android.gms:play-services-location:21.0.1")
 }

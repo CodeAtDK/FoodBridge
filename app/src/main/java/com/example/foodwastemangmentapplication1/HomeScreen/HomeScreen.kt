@@ -269,6 +269,7 @@ import androidx.compose.material.icons.filled.List // Example Icon
 import androidx.compose.material.icons.filled.Menu // Example Icon
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person // Example Icon
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -357,7 +358,7 @@ fun DonorHomeScreen(navController: NavController) {
                 ) {
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
-                            text = "Hello, Donor!",
+                            text = "Hello, Donor Dhruva!",
                             style = MaterialTheme.typography.headlineSmall, // M3 Typography
                             fontWeight = FontWeight.Bold
                         )
@@ -390,7 +391,7 @@ fun DonorHomeScreen(navController: NavController) {
 
                 // Primary Action Button
                 Button(
-                    onClick = {
+                    onClick = { navController.navigate(Screen.ScreenAddDonationsScreenRoute.route)
 
 //                        val context = LocalContext.current
 //                        Toast.makeText(context, "Coming Soon...", Toast.LENGTH_LONG).show()
@@ -429,10 +430,11 @@ fun DonorHomeScreen(navController: NavController) {
                 }
                 
                 Button(
-                    onClick = { navController.navigate(Screen.ScreenProductListRoute.route)}
+                    onClick = { navController.navigate(Screen.ScreenPickupScreenRoute.route)},
+
                 ) {
                     Text(
-                        text = "Market Place Demo",
+                        text = "PickUps",
                         style = MaterialTheme.typography.labelLarge, // M3 Typography
                         color = Color.White
                     )
@@ -587,6 +589,7 @@ data class BottomNavItem(
 fun DonorBottomBar(navController: NavController) {
     val items = listOf(
         DonorBottomNavItem("Home", Icons.Default.Home, Screen.ScreenHomeRoute.route),
+        DonorBottomNavItem("Market Place", Icons.Default.ShoppingCart, Screen.ScreenProductListRoute.route),
         DonorBottomNavItem("Donations", Icons.Default.List, Screen.ScreenDonationRoute.route), // Or your specific donations list route
         DonorBottomNavItem("Profile", Icons.Default.Person, Screen.ScreenProfileRoute.route)
     )

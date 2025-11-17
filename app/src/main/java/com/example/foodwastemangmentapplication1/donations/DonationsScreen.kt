@@ -156,7 +156,7 @@
 //    }
 //}
 
-package com.example.foodwastemangmentapplication1.HomeScreen
+package com.example.foodwastemangmentapplication1.donations
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -179,15 +179,21 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar // Using M3 TopAppBar
 import androidx.compose.material3.TopAppBarDefaults // Added for M3 TopAppBar colors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.foodwastemangmentapplication1.HomeScreen.PrimaryGreen
+import com.example.foodwastemangmentapplication1.HomeScreen.PrimaryOrange
 import com.example.foodwastemangmentapplication1.NavigationController.Screen
+import java.util.UUID
 
 // Assuming these are defined elsewhere (e.g., in your Theme or a Colors.kt file)
 // If not, you'll need to define them for the preview and runtime:
@@ -211,42 +217,40 @@ fun FoodSaverTheme(content: @Composable () -> Unit) {
 
 
 // This data class will hold the information for each donation item
-data class Donation(
-    val id: String = java.util.UUID.randomUUID().toString(), // Added a unique key for LazyColumn items
-    val date: String,
-    val items: String,
-    val quantity: String,
-   // val unit: String
-)
+//data class Donation1(
+//    val id: String = UUID.randomUUID().toString(), // Added a unique key for LazyColumn items
+//    val date: String,
+//    val items: String,
+//    val quantity: String,
+//    val unit: String
+//)
 
 @OptIn(ExperimentalMaterial3Api::class) // Required for Material3 TopAppBar
 @Composable
-fun DonationHistoryScreen(navController: NavController) {
+fun DonationHistoryScreen(navController: NavController, viewModel: DonationHistoryViewModel = viewModel()) {
     // Sample data for the list
-    val donations = listOf(
-        Donation("October 26, 2023", "Canned Goods, Fresh Produce", "10", "lbs"),
-        Donation("October 27, 2023", "Canned Goods", "12", "cans"), // Changed date for unique keys
-        Donation("October 28, 2023", "Bread Loaves", "3", "loaves"),  // Changed date for unique keys
-        Donation("October 29, 2023", "Mixed Vegetables", "5", "kg"),  // Changed date for unique keys
-        Donation("October 30, 2023", "Canned Soup", "8", "cans"),   // Changed date for unique keys
-    )
-
+//    val donations = listOf(
+//        Donation1("","October 26, 2023", "Canned Goods, Fresh Produce", "10", "lbs"),
+//        Donation1("","October 27, 2023", "Canned Goods", "12", "cans"), // Changed date for unique keys
+//        Donation1("","October 28, 2023", "Bread Loaves", "3", "loaves"),  // Changed date for unique keys
+//        Donation1("","October 29, 2023", "Mixed Vegetables", "5", "kg"),  // Changed date for unique keys
+//        Donation1("","October 30, 2023", "Canned Soup", "8", "cans"),   // Changed date for unique keys
+//    )
+    val donations by viewModel.donations.collectAsState()
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background) // Use theme background color
+            .background(MaterialTheme.colorScheme.background)
     ) {
-        // Top Bar - Material 3
         TopAppBar(
             title = {
                 Text(
                     text = "Donation History",
-                    // color = Color.White, // Handled by TopAppBarDefaults
                     fontWeight = FontWeight.Bold
                 )
             },
             colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = PrimaryGreen, // Defined in your theme or Colors.kt
+                containerColor = PrimaryGreen,
                 titleContentColor = Color.White,
                 navigationIconContentColor = Color.White
             ),
@@ -260,36 +264,33 @@ fun DonationHistoryScreen(navController: NavController) {
             }
         )
 
-        // Donation List
         LazyColumn(
             modifier = Modifier
-                .weight(1f) // Fills the available space
+                .weight(1f)
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            items(donations, key = { donation -> donation.id }) { donation -> // Added key for performance
+            items(donations) { donation ->
                 DonationHistoryItem(donation = donation)
             }
         }
 
-        // Action Button - Material 3
         Button(
             onClick = {
-                // Navigate to the food donation listing screen
-                navController.navigate("add_donation") // Ensure this route exists
+                navController.navigate(Screen.ScreenAddDonationsScreenRoute.route)
             },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 24.dp)
                 .height(50.dp),
             shape = RoundedCornerShape(12.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = PrimaryOrange) // M3 containerColor
+            colors = ButtonDefaults.buttonColors(containerColor = PrimaryOrange)
         ) {
             Text(
                 text = "Make a New Donation",
-                color = Color.White, // For Buttons, text color is often inferred or can be set directly
+                color = Color.White,
                 fontWeight = FontWeight.Bold,
-                style = MaterialTheme.typography.labelLarge // Example M3 style
+                style = MaterialTheme.typography.labelLarge
             )
         }
     }
@@ -299,9 +300,9 @@ fun DonationHistoryScreen(navController: NavController) {
 fun DonationHistoryItem(donation: Donation) {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp), // M3 elevation
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant) // Example M3 card color
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
     ) {
         Row(
             modifier = Modifier
@@ -313,31 +314,34 @@ fun DonationHistoryItem(donation: Donation) {
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = donation.date,
-                    style = MaterialTheme.typography.bodyLarge, // M3 Typography
+                    text = donation.donorName, // Using donorName since no date field now
+                    style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = donation.items,
-                    style = MaterialTheme.typography.bodyMedium, // M3 Typography
-                    color = MaterialTheme.colorScheme.onSurfaceVariant // Use theme color
+                    text = donation.foodDetails,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-            }
-            Spacer(modifier = Modifier.width(16.dp))
-            Column(
-                horizontalAlignment = Alignment.End
-            ) {
                 Text(
-                    text = "${donation.quantity} {donation.unit}",
-                    style = MaterialTheme.typography.titleMedium, // M3 Typography
-                    color = PrimaryGreen, // Or use MaterialTheme.colorScheme.primary
-                    fontWeight = FontWeight.Bold
+                    text = "Contact: ${donation.contact}",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                Text(
+                    text = "Packaged: ${if (donation.packaged) "Yes" else "No"}",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                Text(
+                    text = "Location: ${donation.latitude ?: "N/A"}, ${donation.longitude ?: "N/A"}",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }
     }
 }
-
 @Preview(showBackground = true)
 @Composable
 fun DonationHistoryScreenPreview() {
