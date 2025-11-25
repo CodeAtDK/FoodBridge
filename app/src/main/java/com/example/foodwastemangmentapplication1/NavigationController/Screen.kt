@@ -12,11 +12,20 @@ sealed class Screen(val route : String){
     object ScreenAddDonationsScreenRoute : Screen(route = "AddDonationsScreenRoute")
     object ScreenAddresSelectionRoute : Screen(route = "AddressSelectionScreenProcess")
     object ScreenPaymentMethodRoute : Screen(route = "PaymentsMethodsScreenProcess")
-    object ScreenProductDetailsRoute : Screen(route = "product_detail_screen/{productId}")
-    {
+    object ScreenVerifierRoute : Screen(route = "ScreenVerifierScreenRoute")
+
+    object ScreenProductDetailsRoute : Screen(route = "product_detail_screen/{productId}") {
+
         fun createRoute(productId: String) = "product_detail_screen/$productId"
-}
+    }
+
     object ScreenPickupScreenRoute : Screen(route = "PickupScreen")
+    object ScreenCartScreenPage : Screen(route = "CartScreenPage")
+    object ScreenDocumentVerification : Screen(route = "DocumentVerification")
+    object ScreenAdmin : Screen(route = "AdminScreen")
+    object ScreenEditProfile : Screen(route = "EditProfileScreen")
+    object ScreenContactSupport : Screen(route = "ContactSupportScreen")
+    object ScreenPrivacySettingScreen : Screen(route = "PrivacySettingScreen")
 
     object AuthRoute : Screen(route = "Auth")
     object HomeRoute : Screen(route = "Home")

@@ -1,219 +1,3 @@
-//package com.example.foodwastemangmentapplication1.HomeScreen
-//
-//import androidx.compose.foundation.Image
-//import androidx.compose.foundation.background
-//import androidx.compose.foundation.layout.*
-//import androidx.compose.foundation.shape.CircleShape
-//import androidx.compose.foundation.shape.RoundedCornerShape
-//import androidx.compose.material.*
-//import androidx.compose.material.icons.Icons
-//import androidx.compose.material.icons.filled.ArrowBack
-//import androidx.compose.material.icons.filled.Edit
-//import androidx.compose.material3.Card
-//import androidx.compose.material3.Icon
-//import androidx.compose.material3.IconButton
-//import androidx.compose.material3.MaterialTheme
-//import androidx.compose.material3.Text
-//import androidx.compose.material3.TopAppBar
-//import androidx.compose.runtime.Composable
-//import androidx.compose.ui.Alignment
-//import androidx.compose.ui.Modifier
-//import androidx.compose.ui.draw.clip
-//import androidx.compose.ui.graphics.Color
-//import androidx.compose.ui.res.painterResource
-//import androidx.compose.ui.text.font.FontWeight
-//import androidx.compose.ui.tooling.preview.Preview
-//import androidx.compose.ui.unit.dp
-//import androidx.navigation.NavController
-//import androidx.navigation.compose.rememberNavController
-//
-//
-//// Assume you have these resources and colors defined
-//// R.drawable.profile_placeholder
-//// R.drawable.donation_badge_icon
-//// PrimaryGreen, PrimaryOrange
-//
-//@Composable
-//fun DonorProfileScreen(navController: NavController) {
-//    Column(
-//        modifier = Modifier
-//            .fillMaxSize()
-//            .background(Color.White)
-//    ) {
-//        // Top Bar
-//        TopAppBar(
-//            title = {
-//                Text(
-//                    text = "Profile",
-//                    color = Color.White,
-//                    fontWeight = FontWeight.Bold
-//                )
-//            },
-//            backgroundColor = PrimaryGreen,
-//            contentColor = Color.White,
-//            navigationIcon = {
-//                IconButton(onClick = { navController.popBackStack() }) {
-//                    Icon(
-//                        imageVector = Icons.Default.ArrowBack,
-//                        contentDescription = "Back"
-//                    )
-//                }
-//            }
-//        )
-//
-//        // Main Content Area
-//        Column(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(16.dp),
-//            horizontalAlignment = Alignment.CenterHorizontally
-//        ) {
-//            // Profile Image
-//            Image(
-//                painter = painterResource(id = ),
-//                contentDescription = "Profile Picture",
-//                modifier = Modifier
-//                    .size(100.dp)
-//                    .clip(CircleShape)
-//            )
-//
-//            Spacer(modifier = Modifier.height(16.dp))
-//
-//            // User Name and Donor Type
-//            Text(
-//                text = "Dhruva Sharma",
-//                style = MaterialTheme.typography.h5,
-//                fontWeight = FontWeight.Bold
-//            )
-//            Text(
-//                text = "Donor Type: Restaurant",
-//                style = MaterialTheme.typography.body1,
-//                color = Color.Gray
-//            )
-//
-//            Spacer(modifier = Modifier.height(24.dp))
-//
-//            // Stats Section (reusable from Home Screen)
-//            Row(
-//                modifier = Modifier.fillMaxWidth(),
-//                horizontalArrangement = Arrangement.SpaceAround
-//            ) {
-//                StatCard(label = "Total Donations", value = "15")
-//                StatCard(label = "Meals Served", value = "250")
-//            }
-//
-//            Spacer(modifier = Modifier.height(24.dp))
-//
-//            // Donor Badge
-//            Row(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(horizontal = 16.dp),
-//                verticalAlignment = Alignment.CenterVertically
-//            ) {
-//                Image(
-//                    painter = painterResource(id = R.drawable.donation_badge_icon),
-//                    contentDescription = "Donor Badge",
-//                    modifier = Modifier.size(40.dp)
-//                )
-//                Spacer(modifier = Modifier.width(16.dp))
-//                Text(
-//                    text = "Bronze Donor",
-//                    style = MaterialTheme.typography.subtitle1,
-//                    fontWeight = FontWeight.Bold
-//                )
-//            }
-//
-//            Spacer(modifier = Modifier.height(32.dp))
-//
-//            // Profile Management Options
-//            ProfileOptionItem(
-//                text = "Edit Profile",
-//                onClick = { /* Navigate to Edit Profile screen */ }
-//            )
-//            ProfileOptionItem(
-//                text = "Privacy Settings",
-//                onClick = { /* Navigate to Privacy Settings screen */ }
-//            )
-//            ProfileOptionItem(
-//                text = "Contact Support",
-//                onClick = { /* Navigate to Contact Support screen */ }
-//            )
-//        }
-//    }
-//}
-//
-//@Composable
-//fun ProfileOptionItem(text: String, onClick: () -> Unit) {
-//    Card(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .height(60.dp)
-//            .padding(vertical = 4.dp),
-//        shape = RoundedCornerShape(12.dp),
-//        elevation = 2.dp
-//    ) {
-//        Row(
-//            modifier = Modifier
-//                .fillMaxSize()
-//                .padding(horizontal = 16.dp),
-//            verticalAlignment = Alignment.CenterVertically,
-//            horizontalArrangement = Arrangement.SpaceBetween
-//        ) {
-//            Text(
-//                text = text,
-//                style = MaterialTheme.typography.body1,
-//                fontWeight = FontWeight.Medium
-//            )
-//            IconButton(onClick = onClick) {
-//                Icon(
-//                    imageVector = Icons.Default.ChevronRight,
-//                    contentDescription = null,
-//                    tint = Color.Gray
-//                )
-//            }
-//        }
-//    }
-//}
-//
-//// Reusing StatCard from the HomeScreen code
-//@Composable
-//fun StatCard(label: String, value: String) {
-//    Card(
-//        modifier = Modifier
-//            .width(150.dp)
-//            .height(80.dp),
-//        shape = RoundedCornerShape(12.dp),
-//        elevation = 4.dp
-//    ) {
-//        Column(
-//            modifier = Modifier
-//                .fillMaxSize()
-//                .padding(12.dp),
-//            verticalArrangement = Arrangement.Center,
-//            horizontalAlignment = Alignment.CenterHorizontally
-//        ) {
-//            Text(
-//                text = value,
-//                style = MaterialTheme.typography.h4,
-//                fontWeight = FontWeight.Bold,
-//                color = PrimaryGreen
-//            )
-//            Text(
-//                text = label,
-//                style = MaterialTheme.typography.caption
-//            )
-//        }
-//    }
-//}
-//
-//@Preview(showBackground = true)
-//@Composable
-//fun DonorProfileScreenPreview() {
-//    FoodSaverTheme {
-//        DonorProfileScreen(navController = rememberNavController())
-//    }
-//}
 package com.example.foodwastemangmentapplication1.HomeScreen
 
 import androidx.compose.foundation.Image
@@ -248,27 +32,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.foodwastemangmentapplication1.NavigationController.Screen
-
-// Define colors and theme here for preview if not globally available
-// val PrimaryGreen = Color(0xFF4CAF50) // Example Green
-// val PrimaryOrange = Color(0xFFFF9800) // Example Orange
-
-/*
-@Composable
-fun FoodSaverTheme(content: @Composable () -> Unit) {
-    MaterialTheme(
-        colorScheme = MaterialTheme.colorScheme.copy(
-            primary = PrimaryGreen,
-            secondary = PrimaryOrange,
-            surfaceVariant = Color.LightGray,
-            onSurfaceVariant = Color.DarkGray
-        ),
-        typography = MaterialTheme.typography,
-        shapes = MaterialTheme.shapes,
-        content = content
-    )
-}
-*/
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -387,15 +150,19 @@ fun DonorProfileScreen(navController: NavController) {
             // Profile Management Options
             ProfileOptionItem(
                 text = "Edit Profile",
-                onClick = { /* Navigate to Edit Profile screen */ }
+                onClick = { navController.navigate(route = Screen.ScreenEditProfile.route)}
             )
             ProfileOptionItem(
                 text = "Privacy Settings",
-                onClick = { /* Navigate to Privacy Settings screen */ }
+                onClick = { navController.navigate(route = Screen.ScreenPrivacySettingScreen.route) }
             )
             ProfileOptionItem(
                 text = "Contact Support",
-                onClick = { /* Navigate to Contact Support screen */ }
+                onClick = { navController.navigate(route = Screen.ScreenContactSupport.route) }
+            )
+            ProfileOptionItem(
+                text = "Verify",
+                onClick = { navController.navigate(route = Screen.ScreenDocumentVerification.route) }
             )
         }
     }

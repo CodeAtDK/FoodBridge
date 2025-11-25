@@ -18,6 +18,15 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+//        buildConfigField "String", "ATTESTR_API_KEY", "\"${project.hasProperty("ATTESTR_API_KEY") ? project.ATTESTR_API_KEY : ""}\""
+//        buildConfigField "String", "ATTESTR_BASE_URL", "\"${project.hasProperty("ATTESTR_BASE_URL") ? project.ATTESTR_BASE_URL : "https://api.attestr.com"}\""
+
+        val atKey = (project.findProperty("ATTESTR_API_KEY") as? String) ?: ""
+        val atBase = (project.findProperty("ATTESTR_BASE_URL") as? String) ?: "https://api.attestr.com/"
+
+        buildConfigField("String", "ATTESTR_API_KEY", "\"$atKey\"")
+        buildConfigField("String", "ATTESTR_BASE_URL", "\"$atBase\"")
     }
 
     buildTypes {
@@ -38,6 +47,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -85,4 +95,19 @@ dependencies {
 
     // locations
     implementation("com.google.android.gms:play-services-location:21.0.1")
+
+    // inside dependencies { ... }
+    implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
+    implementation("androidx.activity:activity-compose:1.8.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+
+    implementation("com.google.mlkit:text-recognition:16.0.1")
+
+
+    implementation("com.google.firebase:firebase-storage")
 }

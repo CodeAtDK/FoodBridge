@@ -1,6 +1,5 @@
 package com.example.foodwastemangmentapplication1.LoginProcess
 
-// import androidx.navigation.NavController // Removed as it's not used
 import android.content.ContentValues.TAG
 import android.util.Log
 import android.widget.Toast

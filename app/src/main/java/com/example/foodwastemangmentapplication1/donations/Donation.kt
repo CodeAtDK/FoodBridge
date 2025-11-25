@@ -8,8 +8,5 @@ data class Donation(
     val packaged: Boolean = true, // New field
     val latitude: Double? = null,
     val longitude: Double? = null
-//    val id: String = UUID.randomUUID().toString(), // Added a unique key for LazyColumn items
-//    val date: String,
-//    val items: String,
-//    val quantity: Boolean
+
 )

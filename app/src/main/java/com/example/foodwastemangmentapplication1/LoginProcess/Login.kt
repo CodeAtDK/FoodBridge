@@ -153,11 +153,11 @@ fun LoginScreen(navController: NavController) {
                 }
             )
         }
-        Button(
-            onClick = { navController.navigate(Screen.ScreenHomeRoute.route) }
-        ) {
-            Text("Home", color = Color.White)
-        }
+//        Button(
+//            onClick = { navController.navigate(Screen.ScreenHomeRoute.route) }
+//        ) {
+//            Text("Home", color = Color.White)
+//        }
     }
 }
 

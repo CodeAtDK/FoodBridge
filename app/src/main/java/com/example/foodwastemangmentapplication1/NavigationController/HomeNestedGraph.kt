@@ -2,6 +2,8 @@ package com.example.foodwastemangmentapplication1.NavigationController
 
 import android.util.Log
 import androidx.compose.material3.Text
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -9,12 +11,20 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
+import com.example.foodwastemangmentapplication1.Admin.AdminScreen
+import com.example.foodwastemangmentapplication1.Admin.AdminViewModel
+import com.example.foodwastemangmentapplication1.HomeScreen.ContactSupportScreen
 import com.example.foodwastemangmentapplication1.donations.AddDonationScreen
 import com.example.foodwastemangmentapplication1.donations.DonationHistoryScreen
 import com.example.foodwastemangmentapplication1.donations.DonationViewModel
 import com.example.foodwastemangmentapplication1.HomeScreen.DonorHomeScreen
 import com.example.foodwastemangmentapplication1.HomeScreen.DonorProfileScreen
+import com.example.foodwastemangmentapplication1.HomeScreen.EditProfileScreen
+import com.example.foodwastemangmentapplication1.HomeScreen.PrivacySettingsScreen
+import com.example.foodwastemangmentapplication1.HomeScreen.ProfileViewModel
+import com.example.foodwastemangmentapplication1.Market_Place.AddToCartScreen
 import com.example.foodwastemangmentapplication1.Market_Place.AddressSelectionScreen
+import com.example.foodwastemangmentapplication1.Market_Place.CartViewModel
 import com.example.foodwastemangmentapplication1.Market_Place.PaymentMethodScreen
 import com.example.foodwastemangmentapplication1.Market_Place.ProductDetailScreen
 import com.example.foodwastemangmentapplication1.Market_Place.ProductListScreen
@@ -25,6 +35,14 @@ import com.example.foodwastemangmentapplication1.Market_Place.samplePaymentMetho
 import com.example.foodwastemangmentapplication1.donationPickUps.PickupScreen
 import com.example.foodwastemangmentapplication1.donationPickUps.PickupViewModel
 import com.example.foodwastemangmentapplication1.donations.DonationHistoryViewModel
+import com.example.foodwastemangmentapplication1.fssaiverify.AttestrApi
+import com.example.foodwastemangmentapplication1.fssaiverify.VerifierScreen
+import com.example.foodwastemangmentapplication1.fssaiverify.VerifierViewModel
+import com.example.foodwastemangmentapplication1.fssaiverify.VerifierViewModelFactory
+import com.example.foodwastemangmentapplication1.verfications.DocumentUploadScreen
+import com.example.foodwastemangmentapplication1.verfications.DocumentUploadViewModel
+import com.example.foodwastemangmentapplication1.verfications.DocumentVerification
+import com.google.android.datatransport.BuildConfig
 
 
 fun NavGraphBuilder.HomeGraph(navController: NavController){
@@ -32,43 +50,67 @@ fun NavGraphBuilder.HomeGraph(navController: NavController){
     navigation(startDestination = Screen.ScreenHomeRoute.route, route = Screen.HomeRoute.route) {
 
         composable(route = Screen.ScreenHomeRoute.route) {
-            DonorHomeScreen(navController)
+            val donataionhistory: DonationHistoryViewModel = viewModel()
+            DonorHomeScreen(navController = navController, viewModel  = donataionhistory)
         }
 
         composable(route = Screen.ScreenDonationRoute.route) {
             val donataionhistory: DonationHistoryViewModel = viewModel()
             DonationHistoryScreen(navController = navController, viewModel  = donataionhistory)
         }
+
         composable(route = Screen.ScreenProfileRoute.route) {
             DonorProfileScreen(navController)
         }
+
         composable(route = Screen.ScreenAddDonationsScreenRoute.route) { navBackStackEntry ->
-            // Use viewModel() (for default) or hiltViewModel() (if using Hilt DI)
+
             val donationViewModel: DonationViewModel = viewModel()
             AddDonationScreen(viewModel = donationViewModel, navController = navController,)
         }
+
         composable(route = Screen.ScreenPickupScreenRoute.route) { navBackStackEntry ->
-            // Use viewModel() (for default) or hiltViewModel() (if using Hilt DI)
+
             val PickupScreenViewModel: PickupViewModel = viewModel()
             PickupScreen(viewModel = PickupScreenViewModel, navController = navController,)
         }
 
+        composable(route = Screen.ScreenCartScreenPage.route) { navBackStackEntry ->
 
+            val CartViewModel: CartViewModel = viewModel()
+            AddToCartScreen(navController = navController,viewModel = CartViewModel)
+        }
 
-//        composable(route = Screen.ScreenProductListRoute.route) {
-//            ProductListScreen(navController)
-//        }
-//        composable(route = Screen.ScreenProductDetailsRoute.route) {
-//            ProductDetailScreen(navController)
-//        }
-//        composable(route = Screen.ScreenAddresSelectionRoute.route) {
-//            AddressSelectionScreen(navController)
-//        }
-//        composable(route = Screen.ScreenPaymentMethodRoute.route) {
-//            PaymentMethod(navController,)
-//        }
+        composable(route = Screen.ScreenDocumentVerification.route) { navBackStackEntry ->
+
+            val Documentverfiyi: DocumentUploadViewModel = viewModel()
+            DocumentUploadScreen(navController = navController,viewModel = Documentverfiyi)
+        }
+
+        composable(route = Screen.ScreenAdmin.route) { navBackStackEntry ->
+
+            val AdminViewModel: AdminViewModel = viewModel()
+            AdminScreen(navController = navController,viewModel = AdminViewModel)
+        }
+
+        composable(route = Screen.ScreenEditProfile.route) { navBackStackEntry ->
+
+            val ProfileViewModel: ProfileViewModel = viewModel()
+            EditProfileScreen(navController = navController,viewModel = ProfileViewModel)
+        }
+
+        composable(route = Screen.ScreenContactSupport.route) {
+
+            ContactSupportScreen(navController)
+        }
+
+        composable(route = Screen.ScreenPrivacySettingScreen.route) {
+
+            PrivacySettingsScreen(navController)
+        }
 
         composable(route = Screen.ScreenProductListRoute.route) { backStackEntry ->
+
             val productList: ProductViewModel = viewModel()
             ProductListScreen(
                 navController = navController,
@@ -83,6 +125,16 @@ fun NavGraphBuilder.HomeGraph(navController: NavController){
                 }
             )
         }
+        composable(
+            route = Screen.ScreenVerifierRoute.route
+        ) { navBackStackEntry ->
+
+            val context = LocalContext.current
+            val viewModel: VerifierViewModel = viewModel(
+            )
+            VerifierScreen(viewModel = viewModel,context)
+        }
+
 
 
         composable(
@@ -109,6 +161,7 @@ fun NavGraphBuilder.HomeGraph(navController: NavController){
 
 
         composable(route = Screen.ScreenAddresSelectionRoute.route) {
+
             AddressSelectionScreen(
                 navController = navController,
                 addresses = sampleAddresses, // Pass sample data
@@ -121,23 +174,17 @@ fun NavGraphBuilder.HomeGraph(navController: NavController){
         }
 
         composable(route = Screen.ScreenPaymentMethodRoute.route) {
+
             PaymentMethodScreen( // Corrected to call the Composable function
                 navController = navController,
                 methods = samplePaymentMethods, // Pass sample data
                 onContinue = { paymentMethod ->
                     Log.d("HomeGraph", "Selected Payment: ${paymentMethod.name}")
-                    // Navigate to order summary or confirmation
-                    // navController.navigate("order_summary_route")
+
                 }
             )
         }
 
-//        composable(route = Screen..route) {
-//            (navController)
-//        }
-//        composable(route = Screen..route) {
-//            (navController)
-//        }
 
     }
 }

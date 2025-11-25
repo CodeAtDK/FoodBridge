@@ -53,12 +53,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 
-//import androidx.compose.material.icons.Icons
-//import androidx.compose.material.icons.filled.Visibility
-//import androidx.compose.material.icons.filled.VisibilityOff
-//import androidx.compose.material.icons.filled.Visibility
-//import androidx.compose.material.icons.filled.VisibilityOff
-
 
 
 
@@ -71,17 +65,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             FoodWasteMangmentApplication1Theme {
-              //  auth = Firebase.auth
+
                 firebaseAuth = Firebase.auth
                 addSampleProducts()
-//                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-//                    Greeting(
-//                        name = "Android",
-//                        modifier = Modifier.padding(innerPadding)
-//                    )
-//                }
                 Nav()
-             //   LoginScreen(onButttonClick = { showToastMessage() })
             }
         }
     }
