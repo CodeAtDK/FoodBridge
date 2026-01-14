@@ -19,7 +19,7 @@ An Android application designed to reduce food waste by connecting food donors w
 	•	Kotlin Coroutines
 
 📱 Screenshots
-
+<img width="900" height="850" alt="image" src="https://github.com/user-attachments/assets/c4126401-faa4-4148-9f6b-77bc00a1c452" />
 <img src="https://github.com/user-attachments/assets/440ac748-8149-4863-8fee-af86f5f1fdcf" alt="Screenshot_20260114_232001_Food Bridge" width="25%" height="25%" />
 <img src="https://github.com/user-attachments/assets/19f5b9e1-b471-433b-a6bf-6755859a8b0b" alt="Screenshot_20260114_232006_Food Bridge" width="25%" height="25%" />
 <img src="https://github.com/user-attachments/assets/6913482f-3482-419c-8dac-b4cfcd7bbb22" alt="Screenshot_20260114_232023_Food Bridge" width="25%" height="25%" />
